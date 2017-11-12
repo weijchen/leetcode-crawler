@@ -2,16 +2,20 @@
 '''
 Author: Jimmy Chen
 PN: Leetcode crawler (output), Created Nov. 2017
-Ver: 1.0 (finish)
+Ver: 1.1 (Modify input function)
 Link: 
 '''
 # --------------------------------------------------- libs import
+import sys
 import sqlite3
 # --------------------------------------------------- function
 def get_one(diff):
     conn = sqlite3.connect('usr/leetcode.sqlite')
     cur = conn.cursor()
-    sqlstr = ("SELECT * FROM leetcode WHERE (difficult == '{}' AND lock == 0) ORDER BY RANDOM() LIMIT 1".format(diff))
+    if diff == 'easy' or diff == 'medium' or diff == 'hard':
+        sqlstr = ("SELECT * FROM leetcode WHERE (difficult == '{}' AND lock == 0) ORDER BY RANDOM() LIMIT 1".format(diff))
+    else:
+        sqlstr = ("SELECT * FROM leetcode WHERE (lock == 0) ORDER BY RANDOM() LIMIT 1".format(diff))
     cur.execute(sqlstr)
     count = 0
     for each in cur:
@@ -22,8 +26,9 @@ def get_one(diff):
         acc_ratio = round(each[4]*100, 2)
         q_link = each[5]
         a_link = each[6]
+        difficult = each[7]
         print("========================================")
-        print("This is Question {}: {} ({})".format(id_, title, diff.capitalize()))
+        print("This is Question {}: {} ({})".format(id_, title, difficult.capitalize()))
         print("Accept: {}".format(accept))
         print("Submit: {}".format(submit))
         print("Accept Rate: {}".format(str(acc_ratio)+'%'))
@@ -36,7 +41,8 @@ def get_one(diff):
 
 # --------------------------------------------------- Start
 while True:
-    diff = input(str('Choose difficulty (Easy, Medium or Hard)> '))
-    if diff == 'Q' or diff == 'q' or diff == '0':
-        break
+    diff = 'empty'
+    if len(sys.argv) >= 2:
+        diff = str(sys.argv[1])
     get_one(diff.lower())
+    break
