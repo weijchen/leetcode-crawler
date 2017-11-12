@@ -42,12 +42,12 @@ class Crawler(object):
         '''
         Trans json content into sql db
         '''
-        # ===== Clear DB first =====
+        # ===== Clear DB =====
         sqlstr = 'DELETE FROM leetcode'
         cursor = conn.execute(sqlstr)
         conn.execute(sqlstr)
         conn.commit()
-        # ===== Load newest contents =====
+        # ===== Load lateset contents =====
         filename = "usr/leetcode.json"
         temp = open(filename).read()
         leets = json.loads(temp)
