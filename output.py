@@ -12,7 +12,7 @@ import re
 import json
 import random
 import sqlite3
-# --------------------------------------------------- Main panel
+# --------------------------------------------------- function
 def get_one(diff):
     conn = sqlite3.connect('usr/leetcode.sqlite')
     cur = conn.cursor()
@@ -39,6 +39,7 @@ def get_one(diff):
             print("Solution: https://leetcode.com/problems/{}/solution/".format(a_link))
         print("========================================")
 
+# --------------------------------------------------- Start
 while True:
     diff = input(str('Choose difficulty (Easy, Medium or Hard)> '))
     if diff == 'Q' or diff == 'q' or diff == '0':
