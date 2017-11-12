@@ -6,11 +6,6 @@ Ver: 1.0 (finish)
 Link: 
 '''
 # --------------------------------------------------- libs import
-import requests
-from bs4 import BeautifulSoup
-import re
-import json
-import random
 import sqlite3
 # --------------------------------------------------- function
 def get_one(diff):
