@@ -111,7 +111,7 @@ while True:
         print("-----------------------------------------")
     # -- 3. Clear DB --
     elif choice == 3:
-        choice = str(input("確定刪除資料庫? (Y/N) "))
+        choice = str(input("Clear DB? (Y/N) "))
         if choice == 'Y' or choice == 'y':
             conn = sqlite3.connect('{}leetcode.sqlite'.format(PATH))
             sqlstr = 'DELETE FROM leetcode'
