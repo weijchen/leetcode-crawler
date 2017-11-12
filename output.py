@@ -2,7 +2,7 @@
 '''
 Author: Jimmy Chen
 PN: Leetcode crawler (output), Created Nov. 2017
-Ver: 1.1 (Modify input function)
+Ver: 1.2 (Add secret path)
 Link: 
 '''
 # --------------------------------------------------- libs import
@@ -10,7 +10,7 @@ import sys
 import sqlite3
 # --------------------------------------------------- function
 def get_one(diff):
-    conn = sqlite3.connect('usr/leetcode.sqlite')
+    conn = sqlite3.connect('{}leetcode.sqlite'.format(PATH))
     cur = conn.cursor()
     if diff == 'easy' or diff == 'medium' or diff == 'hard':
         sqlstr = ("SELECT * FROM leetcode WHERE (difficult == '{}' AND lock == 0) ORDER BY RANDOM() LIMIT 1".format(diff))
@@ -41,6 +41,8 @@ def get_one(diff):
 
 # --------------------------------------------------- Start
 while True:
+    with open('/Users/jimmyweicc/PATH/leetcode-crawler/path.txt', 'r') as f:
+        PATH = f.readline()
     diff = 'empty'
     if len(sys.argv) >= 2:
         diff = str(sys.argv[1])

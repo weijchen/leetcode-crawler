@@ -2,7 +2,7 @@
 '''
 Author: Jimmy Chen
 PN: Leetcode crawler (crawler), Created Nov. 2017
-Ver: 1.0 (finish)
+Ver: 1.1 (Add secret path)
 Link: 
 '''
 # --------------------------------------------------- libs import
@@ -35,7 +35,7 @@ class Crawler(object):
         regex_str = r'{"ac_easy": 0, "category_slug": "all", (.*?), "frequency_high": 0, "ac_medium": 0, "is_paid": false, "frequency_mid": 0, "num_solved": 0, "ac_hard": 0, "user_name": "", "num_total": [\d]*}'
         m = re.search(regex_str, res.text)
         js = json.loads('{'+m.group(1)+'}')
-        with open ('usr/leetcode.json', 'w') as f:
+        with open ('{}leetcode.json'.format(PATH), 'w') as f:
             f.write(json.dumps(js))
             f.close()
     def store():
@@ -48,7 +48,7 @@ class Crawler(object):
         conn.execute(sqlstr)
         conn.commit()
         # ===== Load lateset contents =====
-        filename = "usr/leetcode.json"
+        filename = "{}leetcode.json".format(PATH)
         temp = open(filename).read()
         leets = json.loads(temp)
         count = 0
@@ -84,6 +84,8 @@ class Crawler(object):
 
 # --------------------------------------------------- Start
 while True:
+    with open('/Users/jimmyweicc/PATH/leetcode-crawler/path.txt', 'r') as f:
+        PATH = f.readline()
     disp_menu()
     choice = int(input("Choose function: "))
     print("-----------------------------------------")
@@ -93,7 +95,7 @@ while True:
     elif choice == 1:
         try:
             sqlstr = ('CREATE TABLE leetcode (id INT UNIQUE, title TEXT, submit INT, accept INT, acc_ratio NUMERIC, q_link TEXT, a_link TEXT, difficult TEXT, lock BOOLEAN)')
-            conn = sqlite3.connect('usr/leetcode.sqlite')
+            conn = sqlite3.connect('{}leetcode.sqlite'.format(PATH))
             conn.execute(sqlstr)
             conn.commit()
             print('-- DB created --')
@@ -102,7 +104,7 @@ while True:
             print(e)
     # -- 2. Store problems --
     elif choice == 2:
-        conn = sqlite3.connect('usr/leetcode.sqlite')
+        conn = sqlite3.connect('{}leetcode.sqlite'.format(PATH))
         Crawler.crawl()
         Crawler.store()
         print('-- LeetCode downloaded --')
@@ -111,7 +113,7 @@ while True:
     elif choice == 3:
         choice = str(input("確定刪除資料庫? (Y/N) "))
         if choice == 'Y' or choice == 'y':
-            conn = sqlite3.connect('usr/leetcode.sqlite')
+            conn = sqlite3.connect('{}leetcode.sqlite'.format(PATH))
             sqlstr = 'DELETE FROM leetcode'
             cursor = conn.execute(sqlstr)
             conn.execute(sqlstr)
