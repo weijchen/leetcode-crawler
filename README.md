@@ -1,8 +1,8 @@
 # Leetcode crawler
 
-crawler.py: Download list of leetcode problems and store into SQL
+crawler.py: Download list of leetcode problems and store into SQL DB
 
-output.py: Select (Easy/Medium/Hard) problem from SQL DB
+output.py: Pick a (Easy/Medium/Hard) problem from SQL DB
 * Format
 
   * (Random) output.py
