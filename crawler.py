@@ -30,7 +30,9 @@ class Crawler(object):
         '''
         Crawl leetcode contents
         '''
-        headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'}
+        headers = {
+        'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+        }
         res = requests.get("https://leetcode.com/api/problems/all/", headers=headers)
         regex_str = r'{"ac_easy": 0, "category_slug": "all", (.*?), "frequency_high": 0, "ac_medium": 0, "is_paid": false, "frequency_mid": 0, "num_solved": 0, "ac_hard": 0, "user_name": "", "num_total": [\d]*}'
         m = re.search(regex_str, res.text)
